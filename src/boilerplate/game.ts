@@ -1,20 +1,24 @@
 import 'phaser';
-import { InputManager } from './input/input.manager';
-import { Player } from './entities/player.entity';
+import {Container} from 'inversify';
+import {DuelScene} from './scenes/duel.scene';
+import {INJECTION_TYPES} from './injection-types';
 
 // game class
 export class Game extends Phaser.Game {
 
-  private inputManager: Phaser.Input.InputManager;
-
   constructor(
-    config: GameConfig,
+    private readonly gameConfig: GameConfig,
+    private readonly applicationContainer: Container,
+    ) {
+    super(gameConfig);
 
-  ) {
-    console.log('game built');
-    super(config);
+    const windowMannager = {
+      width: gameConfig.width,
+      height: gameConfig.height,
+    };
 
-    this.inputManager = new InputManager(this, {});
+    // this.scene.bringToTop(applicationContainer.get<DuelScene>(INJECTION_TYPES.DuelScene));
   }
 
+  // step(time: number, delta: number ) {}
 }
