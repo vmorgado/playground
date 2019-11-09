@@ -3,7 +3,9 @@ var pathToPhaser = path.join(__dirname, '/node_modules/phaser/');
 var phaser = path.join(pathToPhaser, 'dist/phaser.js');
 
 module.exports = {
-  entry: './src/boilerplate/game.ts',
+  // entry: './src/games/<nome-do-jogo>/main.ts',
+  // entry: './src/games/super-mario-land/game.ts',
+  entry: './src/boilerplate/main.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',

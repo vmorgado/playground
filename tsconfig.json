@@ -4,6 +4,11 @@
     "module": "CommonJS",
     "sourceMap": true,
     "noImplicitAny": false,
-    "strict": false
-  }
+    "baseUrl": "./",
+  },
+  "exclude": [
+    "node_modules",
+    "src/games",
+    "cheatsheets",
+  ]
 }
