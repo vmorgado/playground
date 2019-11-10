@@ -1,20 +1,42 @@
-export const configuration = {
+import {SceneConfiguration} from '../model/scene.configuration';
+import {ColorIdentifier} from '../entity/enums/color-identifier.enum';
 
-    containerConfiguration: [
-        {
-            key: 'container-menu-1',
-            title: 'Menu',
-            width: 100,
-            height: 200,
-        },
-        {
-            key: 'container-main-window',
-            name: '',
-            title: 'Menu',
-            width: 100,
-            height: 200,
-        }
-    ],
-
-    sceneConfiguration: [],
+export const duelSceneConfiguration: SceneConfiguration = {
+    id: 1,
+    metadata: { key: 'duel-scene'},
+    key: 'duel-scene',
+    containers: [{
+        id: 1,
+        key: 'container-left',
+        title: 'left container',
+        X_TILES: 3,
+        Y_TILES: 9,
+        START_X: 0,
+        START_Y: 0,
+        interactive: false,
+        events: [],
+        backgroundColor: 0x0000FF,
+    }, {
+        id: 2,
+        key: 'container-main',
+        title: 'main container',
+        X_TILES: 10,
+        Y_TILES: 9,
+        START_X: 3,
+        START_Y: 0,
+        interactive: false,
+        events: [],
+        backgroundColor: 0x0000FF,
+    }, {
+        id: 3,
+        key: 'container-right',
+        title: 'left container',
+        X_TILES: 3,
+        Y_TILES: 9,
+        START_X: 13,
+        START_Y: 0,
+        interactive: false,
+        events: [],
+        backgroundColor: 0x00FF00,
+    }],
 };

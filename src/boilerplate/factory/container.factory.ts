@@ -1,7 +1,16 @@
+import {WindowContainerConfiguration} from '../model/window.container.configuratio';
+import {WindowManagerInterface} from '../user-interface/window.manager.interface';
+
 export class ContainerFactory {
 
-    get( width: number, height: number, x: number, y: number, color: number) {
+    static get( scene: Phaser.Scene, containerConfig: WindowContainerConfiguration, windowManager: WindowManagerInterface ): Phaser.GameObjects.Container {
 
-        return 'container';
+        const windowConfig = { width: windowManager,  }
+        const container = scene.add.container( containerConfig.START_X, containerConfig.START_Y);
+
+        container.setDisplaySize(windowConfig * 3 / 16, 10);
+        // container.setName(containerConfig.)
+
+        return container;
     }
 }

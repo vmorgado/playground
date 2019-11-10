@@ -1,4 +1,4 @@
-import {inject, injectable} from 'inversify';
+import {decorate, inject, injectable} from 'inversify';
 import {INJECTION_TYPES} from '../injection-types';
 import {WindowManagerInterface} from '../user-interface/window.manager.interface';
 import {SceneInterface} from './scene.interface';

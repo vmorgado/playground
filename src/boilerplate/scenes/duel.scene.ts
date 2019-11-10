@@ -1,12 +1,15 @@
 import {inject, injectable} from 'inversify';
-import { ColorIdentifier } from '../entity/enums/color-identifier.enum';
 import { INJECTION_TYPES } from '../injection-types';
 import { WindowManagerInterface } from '../user-interface/window.manager.interface';
 import 'reflect-metadata';
 import {SceneInterface} from './scene.interface';
+import {SceneConfiguration} from '../model/scene.configuration';
+import {duelSceneConfiguration} from '../duel/config';
 
 @injectable()
-export class DuelScene extends Phaser.Scene implements SceneInterface{
+export class DuelScene extends Phaser.Scene implements SceneInterface {
+
+  private sceneConfiguration: SceneConfiguration;
 
   constructor(
     @inject(INJECTION_TYPES.WindowManagerInterface)
@@ -16,7 +19,9 @@ export class DuelScene extends Phaser.Scene implements SceneInterface{
       key: 'duel-scene',
     });
 
-    // this.windowManager.setScene(this);
+    this.sceneConfiguration = duelSceneConfiguration;
+
+    this.windowManager.setScene(this);
   }
 
   preload() {
@@ -25,8 +30,9 @@ export class DuelScene extends Phaser.Scene implements SceneInterface{
   }
 
   create() {
-    console.log('scene - create');
-    const grid = this.add.grid(0, 0, 1366, 768, 1366 / 16, 768 / 9, ColorIdentifier.WHITE, 1, ColorIdentifier.BLACK, 1);
+    console.log('Window Manager will now take control.');
+
+    this.windowManager.initialize(this.sceneConfiguration);
   }
 
   update(time: number, delta: number) {
