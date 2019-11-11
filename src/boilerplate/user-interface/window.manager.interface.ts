@@ -5,4 +5,6 @@ export interface WindowManagerInterface {
   getHeight(): number;
   setScene(scene: Phaser.Scene): WindowManagerInterface;
   initialize(sceneConfiguration: SceneConfiguration): WindowManagerInterface;
+  getContainers(): Phaser.GameObjects.Container[];
+  build( configuration: any ): any;
 }

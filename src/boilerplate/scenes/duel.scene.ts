@@ -5,6 +5,7 @@ import 'reflect-metadata';
 import {SceneInterface} from './scene.interface';
 import {SceneConfiguration} from '../model/scene.configuration';
 import {duelSceneConfiguration} from '../duel/config';
+import {BoardInterface} from '../duel/board.interface';
 
 @injectable()
 export class DuelScene extends Phaser.Scene implements SceneInterface {
@@ -12,6 +13,8 @@ export class DuelScene extends Phaser.Scene implements SceneInterface {
   private sceneConfiguration: SceneConfiguration;
 
   constructor(
+    @inject(INJECTION_TYPES.MarbleBoard)
+    private board: BoardInterface,
     @inject(INJECTION_TYPES.WindowManagerInterface)
     private windowManager: WindowManagerInterface,
   ) {
@@ -21,21 +24,15 @@ export class DuelScene extends Phaser.Scene implements SceneInterface {
 
     this.sceneConfiguration = duelSceneConfiguration;
 
-    this.windowManager.setScene(this);
+
   }
 
-  preload() {
-    console.log('scene - preload');
-    // load the window intergace
-  }
+  preload() {}
 
   create() {
-    console.log('Window Manager will now take control.');
-
+    this.windowManager.setScene(this);
     this.windowManager.initialize(this.sceneConfiguration);
   }
 
-  update(time: number, delta: number) {
-    console.log('scene - update');
-  }
+  update(time: number, delta: number) {}
 }

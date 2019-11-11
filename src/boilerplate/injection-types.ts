@@ -5,6 +5,9 @@ const INJECTION_TYPES = {
     MainScene: Symbol.for('MainScene'),
     DuelScene: Symbol.for('DuelScene'),
     WindowManagerInterface: Symbol.for('WindowManagerInterface'),
+    MarbleGenerator: Symbol.for('MarbleGenerator'),
+    MarbleBoard: Symbol.for('MarbleBoard'),
+    RandomDataGenerator: Symbol.for('RandomDataGenerator'),
 };
 
 export {INJECTION_TYPES};

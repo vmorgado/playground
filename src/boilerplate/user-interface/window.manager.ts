@@ -2,15 +2,19 @@ import {WindowManagerInterface} from './window.manager.interface';
 import {injectable} from 'inversify';
 import {ColorIdentifier} from '../entity/enums/color-identifier.enum';
 import {ContainerFactory} from '../factory/container.factory';
-import {duelSceneConfiguration} from '../duel/config';
 import {SceneConfiguration} from '../model/scene.configuration';
 import {WindowContainerConfiguration} from '../model/window.container.configuratio';
+import {MarbleBoardConfiguration} from '../model/marble-board.configuration';
 
 @injectable()
 export class WindowManager implements WindowManagerInterface {
+  static HORIZONTAL_TILES = 16;
+  static VERTICAL_TILES = 9;
+  static TILE_WIDTH = (width: number) => width / WindowManager.HORIZONTAL_TILES;
+  static TILE_HEIGHT = (height: number) => height / WindowManager.VERTICAL_TILES;
 
-  private width = 800;
-  private height = 600;
+  private width = 1366;
+  private height = 768;
 
   private grid: Phaser.GameObjects.Grid;
 
@@ -18,6 +22,7 @@ export class WindowManager implements WindowManagerInterface {
 
   private containersConfiguration: WindowContainerConfiguration[] = [];
   private containers: Phaser.GameObjects.Container[] = [];
+
 
   getWidth(): number {
     return this.width;
@@ -27,7 +32,7 @@ export class WindowManager implements WindowManagerInterface {
     return this.height;
   }
 
-  getContainers(): Phaser.GameObjects.Container[] {
+  public getContainers(): Phaser.GameObjects.Container[] {
     return this.containers;
   }
 
@@ -37,23 +42,41 @@ export class WindowManager implements WindowManagerInterface {
   }
 
   initialize(sceneConfiguration: SceneConfiguration): WindowManagerInterface {
-    this.renderGrid();
     this.containersConfiguration = sceneConfiguration.containers;
 
     const buildContainers = (
       containers: Phaser.GameObjects.Container[],
       containerConfig: any ): Phaser.GameObjects.Container[]  => {
-        const builtContainer = ContainerFactory.get(this.scene, containerConfig,);
+        const builtContainer = ContainerFactory.get(this.scene, containerConfig, this);
         containers.push(builtContainer);
 
         return containers;
     };
-
     this.containers = this.containersConfiguration.reduce(buildContainers, []);
     return this;
   }
 
-  private renderGrid() {
-    this.grid = this.scene.add.grid(1366 / 2, 768 / 2, 1366, 768, 1366 / 16, 768 / 9, ColorIdentifier.WHITE, 1, ColorIdentifier.BLACK, 1);
+  build( configuration: any ): any {
+    switch (true) {
+      case configuration instanceof SceneConfiguration:
+        break;
+      case configuration instanceof WindowContainerConfiguration:
+        const buildContainers = (
+          containers: Phaser.GameObjects.Container[],
+          containerConfig: any ): Phaser.GameObjects.Container[]  => {
+          const builtContainer = ContainerFactory.get(this.scene, containerConfig, this);
+          containers.push(builtContainer);
+
+          return containers;
+        };
+
+        return this.containersConfiguration.reduce(buildContainers, []);
+
+      case configuration instanceof MarbleBoardConfiguration:
+
+        break;
+    }
+
+    return undefined;
   }
 }

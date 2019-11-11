@@ -15,15 +15,9 @@ export class MainScene extends Phaser.Scene implements SceneInterface {
     });
   }
 
-  preload() {
-    console.log('scene - preload');
-  }
+  preload() {}
 
-  create() {
-    console.log('scene - create');
-  }
+  create() {}
 
-  update(time: number, delta: number) {
-    console.log('scene - update');
-  }
+  update(time: number, delta: number) {}
 }

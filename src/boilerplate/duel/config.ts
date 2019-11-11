@@ -26,7 +26,7 @@ export const duelSceneConfiguration: SceneConfiguration = {
         START_Y: 0,
         interactive: false,
         events: [],
-        backgroundColor: 0x0000FF,
+        backgroundColor: 0xFF0000,
     }, {
         id: 3,
         key: 'container-right',
