@@ -3,7 +3,7 @@ import {injectable} from 'inversify';
 import {ColorIdentifier} from '../entity/enums/color-identifier.enum';
 import {ContainerFactory} from '../factory/container.factory';
 import {SceneConfiguration} from '../model/scene.configuration';
-import {WindowContainerConfiguration} from '../model/window.container.configuratio';
+import {WindowContainerConfiguration} from '../model/window.container.configuration';
 import {MarbleBoardConfiguration} from '../model/marble-board.configuration';
 
 @injectable()
@@ -36,6 +36,10 @@ export class WindowManager implements WindowManagerInterface {
     return this.containers;
   }
 
+  public getContainer(name: string): Phaser.GameObjects.Container {
+    return this.containers.find((container: Phaser.GameObjects.Container) => container.name === name);
+  }
+
   setScene(scene: Phaser.Scene): WindowManagerInterface {
     this.scene = scene;
     return this;
@@ -56,11 +60,13 @@ export class WindowManager implements WindowManagerInterface {
     return this;
   }
 
-  build( configuration: any ): any {
+  build( configuration: unknown ): any {
     switch (true) {
       case configuration instanceof SceneConfiguration:
         break;
       case configuration instanceof WindowContainerConfiguration:
+        configuration = (configuration as WindowContainerConfiguration);
+
         const buildContainers = (
           containers: Phaser.GameObjects.Container[],
           containerConfig: any ): Phaser.GameObjects.Container[]  => {
@@ -73,6 +79,10 @@ export class WindowManager implements WindowManagerInterface {
         return this.containersConfiguration.reduce(buildContainers, []);
 
       case configuration instanceof MarbleBoardConfiguration:
+        const marbleBoardConfiguration = (configuration as MarbleBoardConfiguration);
+        const parentContainer = this.getContainer(marbleBoardConfiguration.grid.key);
+
+        this.grid = this.scene.add.grid(1366 / 2, 768 / 2, 1366, 768, 1366 / 16, 768 / 9, ColorIdentifier.WHITE, 1, ColorIdentifier.BLACK, 1);
 
         break;
     }

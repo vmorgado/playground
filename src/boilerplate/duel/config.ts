@@ -1,5 +1,4 @@
 import {SceneConfiguration} from '../model/scene.configuration';
-import {ColorIdentifier} from '../entity/enums/color-identifier.enum';
 
 export const duelSceneConfiguration: SceneConfiguration = {
     id: 1,

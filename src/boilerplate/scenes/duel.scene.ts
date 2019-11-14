@@ -10,7 +10,7 @@ import {BoardInterface} from '../duel/board.interface';
 @injectable()
 export class DuelScene extends Phaser.Scene implements SceneInterface {
 
-  private sceneConfiguration: SceneConfiguration;
+  private readonly sceneConfiguration: SceneConfiguration;
 
   constructor(
     @inject(INJECTION_TYPES.MarbleBoard)
@@ -23,8 +23,6 @@ export class DuelScene extends Phaser.Scene implements SceneInterface {
     });
 
     this.sceneConfiguration = duelSceneConfiguration;
-
-
   }
 
   preload() {}
@@ -32,6 +30,7 @@ export class DuelScene extends Phaser.Scene implements SceneInterface {
   create() {
     this.windowManager.setScene(this);
     this.windowManager.initialize(this.sceneConfiguration);
+    this.board.startGame();
   }
 
   update(time: number, delta: number) {}

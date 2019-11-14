@@ -1,4 +1,4 @@
-import {WindowContainerConfiguration} from './window.container.configuratio';
+import {WindowContainerConfiguration} from './window.container.configuration';
 
 export class SceneConfiguration {
   id: number;

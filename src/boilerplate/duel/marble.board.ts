@@ -18,13 +18,13 @@ export class MarbleBoard implements BoardInterface {
       private readonly marbleGenerator: MarbleGenerator,
       @inject(INJECTION_TYPES.WindowManagerInterface)
       private readonly windowManager: WindowManagerInterface,
-    ) {
-        this.buildBoard();
-    }
+    ) {}
 
-    public startGame() {
-        const renderingCoinfig = this.buildBoard();
-        const renderedBoard = this.windowManager.build(renderingCoinfig)
+    public startGame(): MarbleBoard {
+        const renderingConfig = this.buildBoard();
+        const renderedBoard = this.windowManager.build(renderingConfig);
+        console.log(this.board);
+        return this;
     }
 
     private respawnMarble(key: string): MarbleInterface {
@@ -33,7 +33,7 @@ export class MarbleBoard implements BoardInterface {
         return marble;
     }
 
-    makePlay(key): MarbleBoard {
+    makePlay(key: string): MarbleBoard {
 
         const poppedMarble = this.popMarble(key);
         const newMarble = this.respawnMarble(key);
@@ -52,12 +52,11 @@ export class MarbleBoard implements BoardInterface {
 
     private buildBoard() {
         this.board = {};
-        let row = 0;
-        let col = 0;
-
         const marbleSpots = [];
+        let row = 0;
 
         while ( row < MarbleBoard.UNITS_HEIGHT_ROW ) {
+            let col = 0;
             while ( col < MarbleBoard.UNITS_WIDTH_COL ) {
                 const key = `${row}-${col}`;
                 const marble = this.marbleGenerator.generate(1)[0];

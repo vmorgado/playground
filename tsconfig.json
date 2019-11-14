@@ -3,7 +3,7 @@
     "target": "es5",
     "lib": ["es6", "dom"],
     "module": "commonjs",
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "jest"],
     "sourceMap": true,
     "noImplicitAny": false,
     "baseUrl": "./",
@@ -15,5 +15,6 @@
     "node_modules",
     "src/games",
     "cheatsheets",
+    "test"
   ]
 }

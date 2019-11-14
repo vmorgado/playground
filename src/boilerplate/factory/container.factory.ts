@@ -1,4 +1,4 @@
-import {WindowContainerConfiguration} from '../model/window.container.configuratio';
+import {WindowContainerConfiguration} from '../model/window.container.configuration';
 import {WindowManagerInterface} from '../user-interface/window.manager.interface';
 import {WindowManager} from '../user-interface/window.manager';
 
@@ -26,9 +26,7 @@ export class ContainerFactory {
         containerBackground.setFillStyle(containerConfig.backgroundColor, 1);
 
         const container = scene.add.container( 0, 0);
-        // container.add(containerBackground);
-
-        console.log('FROOOOOOODOOO');
+        container.add(containerBackground);
 
         container.setName(containerConfig.key);
         // container.setDisplaySize(containerWidth, containerHeight);

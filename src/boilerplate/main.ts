@@ -1,8 +1,9 @@
 import 'phaser';
 import { Game } from './game';
-import {gameConfig} from './application.container';
+import {applicationContainer, gameConfig} from './application.container';
 
 // when the page is loaded, create our game instance
 window.addEventListener('load', () => {
-  const game = new Game(gameConfig);
+  // const game = new Game(gameConfig);
+  const game = applicationContainer.resolve<Game>(Game);
 });
