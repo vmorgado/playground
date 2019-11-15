@@ -4,6 +4,8 @@ import {BoardInterface} from './board.interface';
 import {INJECTION_TYPES} from '../injection-types';
 import {MarbleInterface} from './marbles/marble.interface';
 import {WindowManagerInterface} from '../user-interface/window.manager.interface';
+import {MarbleBoardConfiguration} from '../model/marble-board.configuration';
+import {TurnResult} from './turn.result';
 
 // key =  row x col
 @injectable()
@@ -11,47 +13,60 @@ export class MarbleBoard implements BoardInterface {
     static UNITS_WIDTH_COL = 7;
     static UNITS_HEIGHT_ROW = 8;
 
-    private board: {[key: string]: MarbleInterface};
+    private turn = 0;
+
+    private boardMap: {[key: string]: MarbleInterface};
+    private windowManager: WindowManagerInterface;
 
     constructor(
       @inject(INJECTION_TYPES.MarbleGenerator)
       private readonly marbleGenerator: MarbleGenerator,
-      @inject(INJECTION_TYPES.WindowManagerInterface)
-      private readonly windowManager: WindowManagerInterface,
     ) {}
+
+    public get(key: string): MarbleInterface {
+        return this.boardMap[key];
+    }
+
+    public getBoardMap(): {[key: string]: MarbleInterface} {
+        return this.boardMap;
+    }
+
+    public setWindowManager(windowManager: WindowManagerInterface): MarbleBoard {
+        this.windowManager = windowManager;
+        return this;
+    }
 
     public startGame(): MarbleBoard {
         const renderingConfig = this.buildBoard();
         const renderedBoard = this.windowManager.build(renderingConfig);
-        console.log(this.board);
         return this;
     }
 
     private respawnMarble(key: string): MarbleInterface {
         const marble = this.marbleGenerator.generate(1)[0];
-        this.board[key] = marble;
+        this.boardMap[key] = marble;
         return marble;
     }
 
-    makePlay(key: string): MarbleBoard {
-
+    public makePlay(key: string): TurnResult {
+        this.turn++;
         const poppedMarble = this.popMarble(key);
         const newMarble = this.respawnMarble(key);
-
-        return this;
+        this.boardMap[key] = newMarble;
+        return new TurnResult(this.turn, poppedMarble, newMarble, this);
     }
 
-    popMarble(key: string): MarbleInterface {
-        return this.board[key];
+    private popMarble(key: string): MarbleInterface {
+        return this.boardMap[key];
     }
 
-    private getPositionByKey(key: string) {
-        const splitted = key.split('-');
-        return { row: splitted[0], col: splitted[1] };
+    static getPositionByKey(key: string): { row: number, col: number} {
+        const split = key.split('-');
+        return { row: Number(split[0]), col: Number(split[1]) };
     }
 
-    private buildBoard() {
-        this.board = {};
+    private buildBoard(): MarbleBoardConfiguration {
+        this.boardMap = {};
         const marbleSpots = [];
         let row = 0;
 
@@ -61,24 +76,13 @@ export class MarbleBoard implements BoardInterface {
                 const key = `${row}-${col}`;
                 const marble = this.marbleGenerator.generate(1)[0];
 
-                this.board[key] = marble;
-                marbleSpots.push({
-                    key,
-                    position: this.getPositionByKey(key),
-                    marble,
-                });
-
+                this.boardMap[key] = marble;
                 col++;
             }
 
             row++;
         }
 
-        return {
-            key: 'marble-board',
-            parent: '',
-            grid: {},
-            marbleSpots,
-        };
+        return new MarbleBoardConfiguration( 'marble-boardMap', 'container-main',  this);
     }
 }

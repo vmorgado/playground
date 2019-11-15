@@ -14,7 +14,7 @@ export const duelSceneConfiguration: SceneConfiguration = {
         START_Y: 0,
         interactive: false,
         events: [],
-        backgroundColor: 0x0000FF,
+        backgroundColor: 0xFFFFFF,
     }, {
         id: 2,
         key: 'container-main',
@@ -25,7 +25,7 @@ export const duelSceneConfiguration: SceneConfiguration = {
         START_Y: 0,
         interactive: false,
         events: [],
-        backgroundColor: 0xFF0000,
+        backgroundColor: 0xFFFFFF,
     }, {
         id: 3,
         key: 'container-right',
@@ -36,6 +36,6 @@ export const duelSceneConfiguration: SceneConfiguration = {
         START_Y: 0,
         interactive: false,
         events: [],
-        backgroundColor: 0x00FF00,
+        backgroundColor: 0xFFFFFF,
     }],
 };

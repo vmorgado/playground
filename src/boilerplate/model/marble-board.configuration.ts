@@ -1,8 +1,13 @@
-import {MarbleInterface} from '../duel/marbles/marble.interface';
+import {MarbleBoard} from '../duel/marble.board';
 
 export class MarbleBoardConfiguration {
   key: string;
   parent: string;
-  grid: { key: string, rows: number, col: number };
-  marbleSpots: {[key: string]: MarbleInterface };
+  board: MarbleBoard;
+
+  constructor(key: string, parent: string, board: MarbleBoard) {
+    this.key = key;
+    this.parent = parent;
+    this.board = board;
+  }
 }

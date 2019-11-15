@@ -9,6 +9,9 @@ export class WaterMarble implements MarbleInterface {
   getType(): MarbleType {
     return this.type;
   }
+  getColor(): number {
+    return WaterMarble.COLOR;
+  }
 
   pop(): WaterMarble {
 

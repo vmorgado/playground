@@ -32,8 +32,8 @@ const gameConfig: GameConfig = {
 applicationContainer.bind(INJECTION_TYPES.GameConfig).toConstantValue(gameConfig);
 
 // Random Generator
-const randomDataGeneratorService = new Phaser.Math.RandomDataGenerator(['a1h512l34ka634nck764vs23', '8765qkj88bilcouqobldknqd']);
-applicationContainer.bind('RANDOM_GENERATOR')
+const randomDataGeneratorService = new Phaser.Math.RandomDataGenerator();
+applicationContainer.bind(INJECTION_TYPES.RandomDataGenerator)
   .toConstantValue(randomDataGeneratorService);
 
 // Marble Game

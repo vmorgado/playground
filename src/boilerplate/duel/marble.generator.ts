@@ -6,6 +6,7 @@ import {WaterMarble} from './marbles/water.marble';
 import {WindMarble} from './marbles/wind.marble';
 import {EarthMarble} from './marbles/earth.marble';
 import {FireMarble} from './marbles/fire.marble';
+import {INJECTION_TYPES} from '../injection-types';
 
 @injectable()
 export class MarbleGenerator implements GeneratorInterface {
@@ -14,7 +15,7 @@ export class MarbleGenerator implements GeneratorInterface {
   private readonly marbleTypeArray = [];
 
   constructor(
-    @inject('RANDOM_GENERATOR')
+    @inject(INJECTION_TYPES.RandomDataGenerator)
     private randomDataGenerator: Phaser.Math.RandomDataGenerator,
   ) {
 

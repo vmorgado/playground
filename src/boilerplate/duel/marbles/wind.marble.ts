@@ -8,6 +8,9 @@ export class WindMarble implements MarbleInterface {
   getType(): MarbleType {
     return this.type;
   }
+  getColor(): number {
+    return WindMarble.COLOR;
+  }
 
   pop(): WindMarble {
 

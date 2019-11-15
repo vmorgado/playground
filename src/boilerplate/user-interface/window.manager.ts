@@ -1,10 +1,11 @@
 import {WindowManagerInterface} from './window.manager.interface';
 import {injectable} from 'inversify';
-import {ColorIdentifier} from '../entity/enums/color-identifier.enum';
 import {ContainerFactory} from '../factory/container.factory';
 import {SceneConfiguration} from '../model/scene.configuration';
 import {WindowContainerConfiguration} from '../model/window.container.configuration';
 import {MarbleBoardConfiguration} from '../model/marble-board.configuration';
+import {MarbleBoardFactory} from '../factory/marble.board.factory';
+import {SceneInterface} from '../scenes/scene.interface';
 
 @injectable()
 export class WindowManager implements WindowManagerInterface {
@@ -18,11 +19,10 @@ export class WindowManager implements WindowManagerInterface {
 
   private grid: Phaser.GameObjects.Grid;
 
-  private scene: Phaser.Scene;
+  private scene: SceneInterface;
 
   private containersConfiguration: WindowContainerConfiguration[] = [];
   private containers: Phaser.GameObjects.Container[] = [];
-
 
   getWidth(): number {
     return this.width;
@@ -40,7 +40,7 @@ export class WindowManager implements WindowManagerInterface {
     return this.containers.find((container: Phaser.GameObjects.Container) => container.name === name);
   }
 
-  setScene(scene: Phaser.Scene): WindowManagerInterface {
+  setScene(scene: SceneInterface): WindowManagerInterface {
     this.scene = scene;
     return this;
   }
@@ -50,8 +50,8 @@ export class WindowManager implements WindowManagerInterface {
 
     const buildContainers = (
       containers: Phaser.GameObjects.Container[],
-      containerConfig: any ): Phaser.GameObjects.Container[]  => {
-        const builtContainer = ContainerFactory.get(this.scene, containerConfig, this);
+      containerConfig: WindowContainerConfiguration ): Phaser.GameObjects.Container[]  => {
+        const builtContainer = ContainerFactory.get(this.scene,  this, containerConfig);
         containers.push(builtContainer);
 
         return containers;
@@ -70,7 +70,7 @@ export class WindowManager implements WindowManagerInterface {
         const buildContainers = (
           containers: Phaser.GameObjects.Container[],
           containerConfig: any ): Phaser.GameObjects.Container[]  => {
-          const builtContainer = ContainerFactory.get(this.scene, containerConfig, this);
+          const builtContainer = ContainerFactory.get(this.scene, this, containerConfig);
           containers.push(builtContainer);
 
           return containers;
@@ -80,11 +80,7 @@ export class WindowManager implements WindowManagerInterface {
 
       case configuration instanceof MarbleBoardConfiguration:
         const marbleBoardConfiguration = (configuration as MarbleBoardConfiguration);
-        const parentContainer = this.getContainer(marbleBoardConfiguration.grid.key);
-
-        this.grid = this.scene.add.grid(1366 / 2, 768 / 2, 1366, 768, 1366 / 16, 768 / 9, ColorIdentifier.WHITE, 1, ColorIdentifier.BLACK, 1);
-
-        break;
+        return MarbleBoardFactory.get(this.scene, this, marbleBoardConfiguration);
     }
 
     return undefined;

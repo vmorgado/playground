@@ -10,6 +10,10 @@ export class EarthMarble implements MarbleInterface {
     return this.type;
   }
 
+  getColor(): number {
+    return EarthMarble.COLOR;
+  }
+
   pop(): EarthMarble {
 
     // some stuff to do

@@ -16,7 +16,6 @@ export class Game extends Phaser.Game {
 
     const currentScene = applicationContainer.resolve<DuelScene>(DuelScene);
     this.scene.add('duel-scene', currentScene, true);
-    console.log(currentScene);
   }
 
   // step(time: number, delta: number ) {}

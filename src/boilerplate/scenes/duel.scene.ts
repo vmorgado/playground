@@ -28,9 +28,10 @@ export class DuelScene extends Phaser.Scene implements SceneInterface {
   preload() {}
 
   create() {
-    this.windowManager.setScene(this);
-    this.windowManager.initialize(this.sceneConfiguration);
-    this.board.startGame();
+    this.windowManager = this.windowManager.setScene(this)
+                                           .initialize(this.sceneConfiguration);
+    this.board.setWindowManager(this.windowManager)
+              .startGame();
   }
 
   update(time: number, delta: number) {}
